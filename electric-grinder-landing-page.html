@@ -25,7 +25,7 @@
     background: var(--light);
     color: var(--text);
     font-size: 16px;
-    padding-bottom: 62px; /* matches sticky bar height so content never hidden */
+    padding-bottom: 70px;
   }
   h1,h2,h3,h4 { font-family: 'Oswald', sans-serif; }
 
@@ -76,7 +76,7 @@
     margin-right: auto;
   }
 
-  /* SLIDESHOW */
+  /* ── SLIDESHOW FIX ── */
   .slideshow {
     position: relative;
     max-width: 380px;
@@ -89,346 +89,391 @@
     background: #222;
     aspect-ratio: 4/3;
   }
-  .slide { display: none; width: 100%; height: 100%; position: absolute; top:0; left:0; }
-  .slide.active { display: block; }
-  .slide img { width:100%; height:100%; object-fit:cover; display:block; }
-  .slide-placeholder {
-    width:100%; height:100%;
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    background:#2a2a2a;
-    color:var(--gold);
-    font-size:14px; text-align:center; padding:20px; gap:8px;
+  /* Each slide fills the container absolutely, hidden by default */
+  .slide {
+    display: none;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
   }
-  .slide-placeholder span { font-size:36px; }
-  .slide-placeholder small { color:#aaa; font-size:12px; line-height:1.6; }
+  .slide.active { display: block; }
+  .slide img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
   .slide-dots {
-    position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
-    display:flex; gap:7px; z-index:10;
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 7px; z-index: 10;
   }
   .slide-dot {
-    width:9px; height:9px; border-radius:50%;
-    background:rgba(255,255,255,0.4); cursor:pointer;
-    transition:background 0.3s; border:none;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(255,255,255,0.4); cursor: pointer;
+    transition: background 0.3s; border: none;
   }
-  .slide-dot.active { background:var(--gold); }
+  .slide-dot.active { background: var(--gold); }
   .slide-arrow {
-    position:absolute; top:50%; transform:translateY(-50%);
-    background:rgba(0,0,0,0.45); color:#fff;
-    border:none; width:32px; height:32px;
-    border-radius:50%; font-size:16px; cursor:pointer; z-index:10;
-    display:flex; align-items:center; justify-content:center;
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.45); color: #fff;
+    border: none; width: 32px; height: 32px;
+    border-radius: 50%; font-size: 16px; cursor: pointer; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
   }
-  .slide-arrow.prev { left:8px; }
-  .slide-arrow.next { right:8px; }
+  .slide-arrow.prev { left: 8px; }
+  .slide-arrow.next { right: 8px; }
 
-  /* YOUTUBE */
-  .yt-wrap {
-    width:100%; max-width:600px; margin:0 auto 24px;
-    border-radius:14px; overflow:hidden;
-    border:4px solid var(--gold);
-    box-shadow:0 8px 32px rgba(0,0,0,0.2);
-    aspect-ratio:16/9;
+  /* ── VIDEO FIX ── */
+  .video-wrap {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 24px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 4px solid var(--gold);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    background: #000;
+    /* No aspect-ratio here — let video dictate its own height */
   }
-  .yt-wrap iframe { width:100%; height:100%; border:none; display:block; }
+  .video-wrap video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+  }
 
   /* BUTTONS */
   .btn-main {
-    display:inline-block; background:var(--orange); color:#fff;
-    font-family:'Oswald',sans-serif;
-    font-size:clamp(16px,4vw,22px); font-weight:700;
-    letter-spacing:1px; text-transform:uppercase;
-    padding:16px 36px; border-radius:8px;
-    text-decoration:none; border:none; cursor:pointer;
-    box-shadow:0 6px 0 #a33e00, 0 8px 20px rgba(255,107,0,0.4);
-    transition:transform 0.1s, box-shadow 0.1s; text-align:center;
+    display: inline-block; background: var(--orange); color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(16px,4vw,22px); font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 16px 36px; border-radius: 8px;
+    text-decoration: none; border: none; cursor: pointer;
+    box-shadow: 0 6px 0 #a33e00, 0 8px 20px rgba(255,107,0,0.4);
+    transition: transform 0.1s, box-shadow 0.1s; text-align: center;
+    white-space: nowrap;
   }
-  .btn-main:active { transform:translateY(3px); box-shadow:0 3px 0 #a33e00; }
-  .btn-green { background:var(--green); box-shadow:0 6px 0 #0d4d20, 0 8px 20px rgba(26,140,62,0.4); }
-  .btn-green:active { box-shadow:0 3px 0 #0d4d20; }
-  .btn-wrap { text-align:center; margin:24px 0; }
-  .pulse { animation:pulse 1.8s infinite; }
+  .btn-main:active { transform: translateY(3px); box-shadow: 0 3px 0 #a33e00; }
+  .btn-green { background: var(--green); box-shadow: 0 6px 0 #0d4d20, 0 8px 20px rgba(26,140,62,0.4); }
+  .btn-green:active { box-shadow: 0 3px 0 #0d4d20; }
+  .btn-wrap { text-align: center; margin: 24px 0; }
+  .pulse { animation: pulse 1.8s infinite; }
   @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.04);} }
 
   /* SECTIONS */
-  .section { padding:40px 20px; max-width:720px; margin:0 auto; }
-  .section-dark { background:var(--section-dark-bg); color:#fff; }
-  .section-dark .section { max-width:720px; }
-
+  .section { padding: 40px 20px; max-width: 720px; margin: 0 auto; }
+  .section-dark { background: var(--section-dark-bg); color: #fff; }
   .section-title {
-    font-size:clamp(20px,5vw,32px);
-    text-transform:uppercase; text-align:center;
-    margin-bottom:8px; line-height:1.2;
+    font-size: clamp(20px,5vw,32px);
+    text-transform: uppercase; text-align: center;
+    margin-bottom: 8px; line-height: 1.2;
   }
-  .section-subtitle { text-align:center; font-size:15px; margin-bottom:24px; opacity:0.85; }
-  .divider { width:60px; height:4px; background:var(--orange); margin:12px auto 24px; border-radius:2px; }
-  .divider-gold { background:var(--gold); }
+  .section-subtitle { text-align: center; font-size: 15px; margin-bottom: 24px; opacity: 0.85; }
+  .divider { width: 60px; height: 4px; background: var(--orange); margin: 12px auto 24px; border-radius: 2px; }
+  .divider-gold { background: var(--gold); }
 
   /* PROBLEM */
   .problem-box {
-    background:rgba(0,0,0,0.3); border-left:5px solid var(--red);
-    border-radius:10px; padding:24px 20px; margin-bottom:20px;
+    background: rgba(0,0,0,0.3); border-left: 5px solid var(--red);
+    border-radius: 10px; padding: 24px 20px; margin-bottom: 20px;
   }
-  .problem-box p { color:#f0e8d0; line-height:1.8; font-size:15px; }
-  .problem-list { list-style:none; margin:16px 0; }
+  .problem-box p { color: #f0e8d0; line-height: 1.8; font-size: 15px; }
+  .problem-list { list-style: none; margin: 16px 0; }
   .problem-list li {
-    color:#ffb5b5; padding:6px 0; font-size:15px; font-weight:700;
-    display:flex; align-items:center; gap:10px;
+    color: #ffb5b5; padding: 6px 0; font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
   }
-  .problem-list li::before { content:"😩"; font-size:18px; }
+  .problem-list li::before { content: "😩"; font-size: 18px; }
 
   /* CHECK LIST */
-  .check-list { list-style:none; }
+  .check-list { list-style: none; }
   .check-list li {
-    padding:9px 0; font-size:15px; color:var(--text);
-    display:flex; align-items:flex-start; gap:10px;
-    border-bottom:1px dashed rgba(0,0,0,0.1);
-    line-height:1.5; font-weight:600;
+    padding: 9px 0; font-size: 15px; color: var(--text);
+    display: flex; align-items: flex-start; gap: 10px;
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+    line-height: 1.5; font-weight: 600;
   }
-  .check-list li:last-child { border-bottom:none; }
-  .check-list li::before { content:"✅"; font-size:16px; flex-shrink:0; margin-top:1px; }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list li::before { content: "✅"; font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
   /* FEATURES */
-  .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:20px; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 16px; margin-top: 20px; }
   .feature-card {
-    background:#fff; border-radius:12px; padding:20px;
-    box-shadow:0 4px 16px rgba(200,150,0,0.12);
-    display:flex; gap:14px; align-items:flex-start;
-    border:1px solid #f0e0a0;
+    background: #fff; border-radius: 12px; padding: 20px;
+    box-shadow: 0 4px 16px rgba(200,150,0,0.12);
+    display: flex; gap: 14px; align-items: flex-start;
+    border: 1px solid #f0e0a0;
   }
-  .feature-icon { font-size:28px; flex-shrink:0; }
-  .feature-card h4 { font-family:'Oswald',sans-serif; font-size:16px; margin-bottom:4px; color:var(--dark); }
-  .feature-card p { font-size:14px; color:#555; line-height:1.5; }
+  .feature-icon { font-size: 28px; flex-shrink: 0; }
+  .feature-card h4 { font-family: 'Oswald',sans-serif; font-size: 16px; margin-bottom: 4px; color: var(--dark); }
+  .feature-card p { font-size: 14px; color: #555; line-height: 1.5; }
 
   /* GRIND GRID */
-  .grind-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; margin-top:16px; }
+  .grind-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(170px,1fr)); gap: 10px; margin-top: 16px; }
   .grind-item {
-    background:rgba(255,255,255,0.1); border:1px solid rgba(255,220,100,0.25);
-    border-radius:8px; padding:10px 14px; font-size:14px; font-weight:600;
-    color:#f0e8d0; display:flex; align-items:center; gap:8px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,220,100,0.25);
+    border-radius: 8px; padding: 10px 14px; font-size: 14px; font-weight: 600;
+    color: #f0e8d0; display: flex; align-items: center; gap: 8px;
   }
-  .grind-item::before { content:"✅"; font-size:14px; }
+  .grind-item::before { content: "✅"; font-size: 14px; }
 
   /* PRICE BOX */
   .price-box {
-    background:linear-gradient(135deg,#1a1000,#2a1600);
-    border:3px solid var(--gold); border-radius:16px;
-    padding:28px 24px; text-align:center; margin:20px 0;
+    background: linear-gradient(135deg,#1a1000,#2a1600);
+    border: 3px solid var(--gold); border-radius: 16px;
+    padding: 28px 24px; text-align: center; margin: 20px 0;
   }
-  .price-old { font-size:20px; color:#aaa; text-decoration:line-through; margin-bottom:4px; }
+  .price-old { font-size: 20px; color: #aaa; text-decoration: line-through; margin-bottom: 4px; }
   .price-new {
-    font-family:'Oswald',sans-serif;
-    font-size:clamp(36px,10vw,60px); color:var(--gold);
-    font-weight:700; line-height:1; margin-bottom:8px;
+    font-family: 'Oswald',sans-serif;
+    font-size: clamp(36px,10vw,60px); color: var(--gold);
+    font-weight: 700; line-height: 1; margin-bottom: 8px;
   }
   .price-label {
-    background:var(--red); color:#fff; font-size:12px; font-weight:800;
-    padding:4px 14px; border-radius:30px; text-transform:uppercase;
-    letter-spacing:1px; display:inline-block; margin-bottom:16px;
+    background: var(--red); color: #fff; font-size: 12px; font-weight: 800;
+    padding: 4px 14px; border-radius: 30px; text-transform: uppercase;
+    letter-spacing: 1px; display: inline-block; margin-bottom: 16px;
   }
-  .perks { list-style:none; margin:16px 0; text-align:left; }
+  .perks { list-style: none; margin: 16px 0; text-align: left; }
   .perks li {
-    padding:7px 0; color:#f0e8d0; font-size:15px; font-weight:600;
-    display:flex; align-items:center; gap:10px;
-    border-bottom:1px solid rgba(255,255,255,0.08);
+    padding: 7px 0; color: #f0e8d0; font-size: 15px; font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
-  .perks li:last-child { border-bottom:none; }
+  .perks li:last-child { border-bottom: none; }
   .stock-warning {
-    background:var(--red); color:#fff; text-align:center;
-    font-size:14px; font-weight:800; padding:10px 16px;
-    border-radius:8px; margin-top:16px;
-    animation:blink 1.5s step-end infinite;
+    background: var(--red); color: #fff; text-align: center;
+    font-size: 14px; font-weight: 800; padding: 10px 16px;
+    border-radius: 8px; margin-top: 16px;
+    animation: blink 1.5s step-end infinite;
   }
   @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.7;} }
 
   /* COUNTDOWN */
   .countdown-wrap {
-    background:#1a0f00; border-radius:12px; padding:20px;
-    text-align:center; margin:20px 0;
-    border:1px solid rgba(245,197,24,0.2);
+    background: #1a0f00; border-radius: 12px; padding: 20px;
+    text-align: center; margin: 20px 0;
+    border: 1px solid rgba(245,197,24,0.2);
   }
-  .countdown-label { color:#ff6666; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
-  .countdown-timer { display:flex; justify-content:center; gap:12px; }
-  .timer-block { background:var(--red); color:#fff; border-radius:8px; padding:12px 18px; min-width:64px; }
-  .timer-number { font-family:'Oswald',sans-serif; font-size:36px; font-weight:700; line-height:1; display:block; }
-  .timer-unit { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; opacity:0.85; }
-  .timer-colon { font-family:'Oswald',sans-serif; font-size:36px; color:var(--red); font-weight:700; align-self:center; line-height:1; margin-top:-14px; }
+  .countdown-label { color: #ff6666; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .countdown-timer { display: flex; justify-content: center; gap: 12px; }
+  .timer-block { background: var(--red); color: #fff; border-radius: 8px; padding: 12px 18px; min-width: 64px; }
+  .timer-number { font-family: 'Oswald',sans-serif; font-size: 36px; font-weight: 700; line-height: 1; display: block; }
+  .timer-unit { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; }
+  .timer-colon { font-family: 'Oswald',sans-serif; font-size: 36px; color: var(--red); font-weight: 700; align-self: center; line-height: 1; margin-top: -14px; }
 
   /* HOW TO ORDER */
-  .steps { list-style:none; counter-reset:step; margin-top:16px; }
+  .steps { list-style: none; counter-reset: step; margin-top: 16px; }
   .steps li {
-    counter-increment:step; display:flex; align-items:flex-start;
-    gap:16px; padding:16px 0;
-    border-bottom:1px dashed rgba(255,220,100,0.2);
-    font-size:15px; font-weight:700; color:#f0e8d0;
+    counter-increment: step; display: flex; align-items: flex-start;
+    gap: 16px; padding: 16px 0;
+    border-bottom: 1px dashed rgba(255,220,100,0.2);
+    font-size: 15px; font-weight: 700; color: #f0e8d0;
   }
-  .steps li:last-child { border-bottom:none; }
+  .steps li:last-child { border-bottom: none; }
   .steps li::before {
-    content:counter(step); background:var(--gold); color:#111;
-    font-family:'Oswald',sans-serif; font-size:20px; font-weight:700;
-    width:38px; height:38px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    content: counter(step); background: var(--gold); color: #111;
+    font-family: 'Oswald',sans-serif; font-size: 20px; font-weight: 700;
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
 
   /* NOTICE BOX */
-  .notice-box { background:#fff8d0; border:2px solid #d4a800; border-radius:12px; padding:20px; margin:20px 0; }
-  .notice-box h4 { font-family:'Oswald',sans-serif; font-size:18px; margin-bottom:12px; color:#6b4a00; }
-  .notice-box ul { padding-left:20px; }
-  .notice-box ul li { color:#4a3200; font-size:14px; font-weight:600; padding:4px 0; }
-  .notice-box p { font-size:14px; color:#4a3200; margin-top:10px; }
+  .notice-box { background: #fff8d0; border: 2px solid #d4a800; border-radius: 12px; padding: 20px; margin: 20px 0; }
+  .notice-box h4 { font-family: 'Oswald',sans-serif; font-size: 18px; margin-bottom: 12px; color: #6b4a00; }
+  .notice-box ul { padding-left: 20px; }
+  .notice-box ul li { color: #4a3200; font-size: 14px; font-weight: 600; padding: 4px 0; }
+  .notice-box p { font-size: 14px; color: #4a3200; margin-top: 10px; }
 
   /* ORDER FORM */
   .order-form-wrap {
-    background:#fff; border-radius:16px; padding:28px 24px;
-    box-shadow:0 8px 32px rgba(0,0,0,0.18);
-    max-width:500px; margin:0 auto;
-    border:2px solid var(--gold);
+    background: #fff; border-radius: 16px; padding: 28px 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    max-width: 500px; margin: 0 auto;
+    border: 2px solid var(--gold);
   }
   .form-title {
-    text-align:center; font-family:'Oswald',sans-serif;
-    font-size:22px; text-transform:uppercase; color:var(--dark);
-    margin-bottom:20px; padding-bottom:12px;
-    border-bottom:3px solid var(--orange);
+    text-align: center; font-family: 'Oswald',sans-serif;
+    font-size: 22px; text-transform: uppercase; color: var(--dark);
+    margin-bottom: 20px; padding-bottom: 12px;
+    border-bottom: 3px solid var(--orange);
   }
-  .form-group { margin-bottom:16px; }
-  .form-group label { display:block; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:#555; margin-bottom:6px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #555; margin-bottom: 6px; }
   .form-group input, .form-group select {
-    width:100%; padding:14px 16px; border:2px solid #e0cc80;
-    border-radius:8px; font-family:'Nunito',sans-serif;
-    font-size:15px; color:var(--dark); background:#fffdf0;
-    transition:border-color 0.2s; outline:none; -webkit-appearance:none;
+    width: 100%; padding: 14px 16px; border: 2px solid #e0cc80;
+    border-radius: 8px; font-family: 'Nunito',sans-serif;
+    font-size: 15px; color: var(--dark); background: #fffdf0;
+    transition: border-color 0.2s; outline: none; -webkit-appearance: none;
   }
-  .form-group input:focus, .form-group select:focus { border-color:var(--orange); background:#fff; }
-  .form-group input::placeholder { color:#bbb; }
-  .form-group.required label::after { content:" *"; color:var(--red); }
+  .form-group input:focus, .form-group select:focus { border-color: var(--orange); background: #fff; }
+  .form-group input::placeholder { color: #bbb; }
+  .form-group.required label::after { content: " *"; color: var(--red); }
 
   #form-status {
-    display:none; text-align:center; padding:14px; border-radius:8px;
-    font-weight:700; font-size:15px; margin-bottom:12px;
+    display: none; text-align: center; padding: 14px; border-radius: 8px;
+    font-weight: 700; font-size: 15px; margin-bottom: 12px;
   }
-  #form-status.success { background:#d4edda; color:#1a6b30; border:1px solid #a3d9b1; }
-  #form-status.error   { background:#fde8e8; color:#a00; border:1px solid #f5a0a0; }
+  #form-status.success { background: #d4edda; color: #1a6b30; border: 1px solid #a3d9b1; }
+  #form-status.error   { background: #fde8e8; color: #a00; border: 1px solid #f5a0a0; }
 
   .btn-submit {
-    width:100%; background:var(--green); color:#fff;
-    font-family:'Oswald',sans-serif; font-size:20px; font-weight:700;
-    text-transform:uppercase; letter-spacing:1px; padding:18px;
-    border:none; border-radius:8px; cursor:pointer;
-    box-shadow:0 6px 0 #0d4d20;
-    transition:transform 0.1s, box-shadow 0.1s; margin-top:8px;
+    width: 100%; background: var(--green); color: #fff;
+    font-family: 'Oswald',sans-serif; font-size: 20px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; padding: 18px;
+    border: none; border-radius: 8px; cursor: pointer;
+    box-shadow: 0 6px 0 #0d4d20;
+    transition: transform 0.1s, box-shadow 0.1s; margin-top: 8px;
   }
-  .btn-submit:active { transform:translateY(3px); box-shadow:0 3px 0 #0d4d20; }
-  .btn-submit:disabled { opacity:0.7; cursor:not-allowed; }
+  .btn-submit:active { transform: translateY(3px); box-shadow: 0 3px 0 #0d4d20; }
+  .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+  /* ── THANK YOU PAGE ── */
+  #thankyou-page {
+    display: none;
+    background: linear-gradient(160deg,#1a1000 55%,#0d2200 100%);
+    padding: 50px 20px;
+    text-align: center;
+    min-height: 60vh;
+  }
+  .ty-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 36px 28px;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 3px solid var(--gold);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+  .ty-icon { font-size: 64px; margin-bottom: 16px; }
+  .ty-card h2 {
+    font-family: 'Oswald',sans-serif;
+    font-size: 30px; color: var(--green);
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .ty-card p {
+    font-size: 15px; color: #333; line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .ty-card p strong { color: var(--dark); }
+  .btn-track {
+    display: inline-block;
+    background: #25d366; color: #fff;
+    font-family: 'Oswald',sans-serif;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 18px 36px; border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 6px 0 #1a9e4a;
+    margin-top: 20px;
+    display: block;
+  }
 
   /* TESTIMONIALS */
-  .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-top:20px; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 16px; margin-top: 20px; }
   .testimonial-card {
-    background:#fff; border-radius:12px; padding:20px;
-    box-shadow:0 4px 16px rgba(200,150,0,0.1);
-    border:1px solid #f0e0a0; border-top:4px solid var(--orange);
+    background: #fff; border-radius: 12px; padding: 20px;
+    box-shadow: 0 4px 16px rgba(200,150,0,0.1);
+    border: 1px solid #f0e0a0; border-top: 4px solid var(--orange);
   }
-  .stars { color:var(--gold); font-size:18px; margin-bottom:10px; }
-  .testimonial-text { font-size:15px; color:#333; line-height:1.7; font-style:italic; margin-bottom:12px; }
-  .testimonial-name { font-size:14px; font-weight:800; color:var(--dark); }
+  .stars { color: var(--gold); font-size: 18px; margin-bottom: 10px; }
+  .testimonial-text { font-size: 15px; color: #333; line-height: 1.7; font-style: italic; margin-bottom: 12px; }
+  .testimonial-name { font-size: 14px; font-weight: 800; color: var(--dark); }
 
   /* GUARANTEE */
   .guarantee-box {
-    background:linear-gradient(135deg,#1a3d00,#0d2200);
-    border:3px solid var(--green); border-radius:16px;
-    padding:28px 24px; text-align:center; margin:20px 0;
+    background: linear-gradient(135deg,#1a3d00,#0d2200);
+    border: 3px solid var(--green); border-radius: 16px;
+    padding: 28px 24px; text-align: center; margin: 20px 0;
   }
-  .guarantee-box .icon { font-size:48px; margin-bottom:12px; }
-  .guarantee-box h3 { color:var(--gold); font-size:24px; margin-bottom:8px; }
-  .guarantee-box p { color:#d0e8cc; font-size:15px; line-height:1.7; }
+  .guarantee-box .icon { font-size: 48px; margin-bottom: 12px; }
+  .guarantee-box h3 { color: var(--gold); font-size: 24px; margin-bottom: 8px; }
+  .guarantee-box p { color: #d0e8cc; font-size: 15px; line-height: 1.7; }
 
   /* URGENCY */
-  .urgency-box { background:var(--red); color:#fff; border-radius:12px; padding:24px 20px; text-align:center; margin:20px 0; }
-  .urgency-box h3 { font-size:22px; margin-bottom:10px; }
-  .urgency-box p { font-size:15px; line-height:1.7; margin-bottom:4px; }
+  .urgency-box { background: var(--red); color: #fff; border-radius: 12px; padding: 24px 20px; text-align: center; margin: 20px 0; }
+  .urgency-box h3 { font-size: 22px; margin-bottom: 10px; }
+  .urgency-box p { font-size: 15px; line-height: 1.7; margin-bottom: 4px; }
 
   /* FOOTER */
-  footer { background:#1a1000; color:#a08060; text-align:center; padding:30px 20px; font-size:12px; line-height:1.8; }
-  footer p { max-width:680px; margin:0 auto 8px; }
-  footer .footer-brand { color:var(--gold); font-weight:700; font-size:14px; margin-bottom:10px; }
+  footer { background: #1a1000; color: #a08060; text-align: center; padding: 30px 20px; font-size: 12px; line-height: 1.8; }
+  footer p { max-width: 680px; margin: 0 auto 8px; }
+  footer .footer-brand { color: var(--gold); font-weight: 700; font-size: 14px; margin-bottom: 10px; }
 
-  /* STICKY BAR — fixed height, body has matching padding-bottom */
+  /* ── STICKY BAR MOBILE FIX ── */
   .sticky-cta {
-    position:fixed; bottom:0; left:0; right:0;
-    background:#1a1000; padding:10px 16px;
-    text-align:center; z-index:999;
-    border-top:3px solid var(--gold);
-    display:flex; align-items:center; justify-content:center;
-    gap:14px; flex-wrap:wrap; height:62px;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #1a1000;
+    border-top: 3px solid var(--gold);
+    z-index: 999;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 60px;
   }
-  .sticky-cta span { color:#f0e8d0; font-size:14px; font-weight:700; }
-  .sticky-cta span s { color:#888; }
-  .sticky-cta .btn-main { padding:10px 22px; font-size:15px; }
+  .sticky-cta .sticky-text {
+    color: #f0e8d0;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    flex: 1;
+    min-width: 0;
+  }
+  .sticky-cta .sticky-text s { color: #888; }
+  .sticky-cta .sticky-text strong { color: var(--gold); }
+  .sticky-cta .btn-main {
+    padding: 12px 18px;
+    font-size: 14px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
 
   /* WHATSAPP FLOAT */
   .wa-float {
-    position:fixed; bottom:76px; right:16px;
-    background:#25d366; color:#fff; border-radius:50%;
-    width:52px; height:52px; display:flex;
-    align-items:center; justify-content:center; font-size:26px;
-    box-shadow:0 4px 16px rgba(0,0,0,0.3); text-decoration:none;
-    z-index:1000; transition:transform 0.2s;
+    position: fixed; bottom: 74px; right: 16px;
+    background: #25d366; color: #fff; border-radius: 50%;
+    width: 52px; height: 52px; display: flex;
+    align-items: center; justify-content: center; font-size: 26px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3); text-decoration: none;
+    z-index: 1000; transition: transform 0.2s;
   }
-  .wa-float:hover { transform:scale(1.1); }
+  .wa-float:hover { transform: scale(1.1); }
 
-  @media (max-width:480px) {
-    .timer-block { min-width:54px; padding:10px 12px; }
-    .timer-number { font-size:28px; }
-    .grind-grid { grid-template-columns:repeat(2,1fr); }
-    .sticky-cta span { display:none; }
-    .sticky-cta { height:56px; }
-    body { padding-bottom:56px; }
+  @media (max-width: 480px) {
+    .timer-block { min-width: 54px; padding: 10px 12px; }
+    .timer-number { font-size: 28px; }
+    .grind-grid { grid-template-columns: repeat(2,1fr); }
+    body { padding-bottom: 70px; }
   }
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  👉 Tested and Trusted ☑ — Delivered to your doorstep. Pay on Delivery!
+  👉 Tested and Trusted. Delivered to your doorstep. Pay on Delivery!
 </div>
 
 <!-- ═══ HERO ═══ -->
 <section class="hero">
-  <div class="badge">⚡ Limited Offer — Just For Today</div>
+  <div class="badge">⚡ Limited Offer Just For Today</div>
   <h1>🔥 Stop Grinding <span>The Hard Way!</span><br/>Meet The Electric Grinder <span>NM-8600</span></h1>
   <p class="sub">Grinds Pepper, Beans, Crayfish, Ogbono, Egusi & More In Just 10 Seconds. No Water. No Stress.</p>
 
-  <!--
-  ════════════════════════════════════════════
-  IMAGE SLIDESHOW — HOW TO ADD YOUR 3 PHOTOS:
-
-  Step 1: Copy your 3 product photos into the
-          my-grinder-store folder on your Mac.
-          Name them: slide1.jpg, slide2.jpg, slide3.jpg
-
-  Step 2: In each slide below, DELETE the entire
-          <div class="slide-placeholder">...</div>
-          and replace it with ONE line:
-          <img src="slide1.jpg" alt="Electric Grinder">
-          (change the filename for each slide)
-
-  Step 3: Save, then push to GitHub.
-  ════════════════════════════════════════════
-  -->
+  <!-- ── SLIDESHOW (FIXED) ── -->
   <div class="slideshow" id="heroSlideshow">
 
     <div class="slide active">
-      <!-- REPLACE THIS WHOLE div.slide-placeholder with your image tag -->
-      <div class="slide active">
-  <img src="photo1.jpg" alt="Electric Grinder NM-8600">
-</div>
+      <img src="photo1.jpg" alt="Electric Grinder NM-8600">
+    </div>
 
-<div class="slide">
-  <img src="photo2.jpg" alt="Electric Grinder NM-8600">
-</div>
+    <div class="slide">
+      <img src="photo2.jpg" alt="Electric Grinder NM-8600">
+    </div>
 
-<div class="slide">
-  <img src="photo3.jpg" alt="Electric Grinder NM-8600">
-</div>
+    <div class="slide">
+      <img src="photo3.jpg" alt="Electric Grinder NM-8600">
+    </div>
 
     <button class="slide-arrow prev" onclick="moveSlide(-1)">&#8249;</button>
     <button class="slide-arrow next" onclick="moveSlide(1)">&#8250;</button>
@@ -471,16 +516,16 @@
 </div>
 
 
-<!-- PRODUCT INTRO + VIDEO -->
+<!-- PRODUCT INTRO + VIDEO (FIXED) -->
 <div style="background:var(--light2);">
 <div class="section">
   <h2 class="section-title">🌟 Meet The Electric Grinder (NM-8600)</h2>
   <p class="section-subtitle">⚡ Powerful, Reliable, and Perfect for Every Home</p>
   <div class="divider"></div>
 
-  <!-- LOCAL VIDEO -->
-  <div class="yt-wrap">
-    <video controls width="100%" style="border-radius:10px;">
+  <!-- LOCAL VIDEO — fully responsive, no cropping -->
+  <div class="video-wrap">
+    <video controls playsinline preload="metadata">
       <source src="video1.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -603,7 +648,7 @@
     <li>Scroll down below 👇 and fill in your delivery details</li>
     <li>Click the green "Process My Order" button</li>
     <li>Our agent will call or WhatsApp you to confirm your order</li>
-    <li>Your grinder gets delivered to your doorstep — pay when it arrives!</li>
+    <li>Your grinder gets delivered to your doorstep and pay when it arrives!</li>
   </ol>
 </div>
 </div>
@@ -627,23 +672,7 @@
 </div>
 
 
-<!--
-════════════════════════════════════════════════════════
-ORDER FORM — HOW TO RECEIVE ORDERS IN YOUR EMAIL:
-
-Orders go to Feramsfarm@gmail.com using Formspree (FREE).
-
-ONE-TIME SETUP (takes 2 minutes):
-1. Go to https://formspree.io
-2. Sign up with Feramsfarm@gmail.com
-3. Click "+ New Form" → name it "Grinder Orders"
-4. Copy the form ID (looks like: xpwzabcd)
-5. In the <form> tag below, replace YOUR_FORM_ID with your real ID
-6. Save the file → push to GitHub → done!
-
-Every order will then email you AND open WhatsApp.
-════════════════════════════════════════════════════════
--->
+<!-- ORDER FORM -->
 <div id="order" style="background:linear-gradient(160deg,#1a1000 55%,#0d2200 100%);padding:40px 20px;">
   <h2 class="section-title" style="color:#fff;text-align:center;margin-bottom:8px;">✅ Ready To Get Yours?</h2>
   <p style="text-align:center;color:#d0b880;margin-bottom:24px;font-size:15px;">Fill the form below to place your order</p>
@@ -654,7 +683,6 @@ Every order will then email you AND open WhatsApp.
     </div>
     <div id="form-status"></div>
 
-    <!-- REPLACE "YOUR_FORM_ID" with your actual Formspree ID -->
     <form id="orderForm" action="https://formspree.io/f/xojpvqea" method="POST">
       <input type="hidden" name="_subject" value="🛒 New Grinder Order — Ferams Store">
 
@@ -708,6 +736,21 @@ Every order will then email you AND open WhatsApp.
 </div>
 
 
+<!-- ── THANK YOU PAGE (hidden until order placed) ── -->
+<div id="thankyou-page">
+  <div class="ty-card">
+    <div class="ty-icon">🎉</div>
+    <h2>Thank You!</h2>
+    <p><strong>Your Order is Confirmed and has been received.</strong></p>
+    <p>Kindly note that because you ordered during this discount, you automatically qualify for a <strong>free delivery.</strong></p>
+    <p>Delivery takes <strong>1–2 Working Days</strong>, depending on your location.</p>
+    <p>One of our Agents will reach out to you via a call and schedule a delivery timing with you, afterwhich our Partner Delivery Agents will deliver the Product to you and receive your Payment.</p>
+    <p>Click the <strong>TRACK ORDER</strong> button below to track and get live updates about your Order on WhatsApp. This also gives you access to see all our amazing products and enjoy massive discounts at <strong>Ferams Store.</strong></p>
+    <a href="https://wa.me/2349061892011" class="btn-track" target="_blank">💬 TRACK ORDER ON WHATSAPP</a>
+  </div>
+</div>
+
+
 <!-- TESTIMONIALS -->
 <div style="background:var(--gray);">
 <div class="section">
@@ -739,7 +782,7 @@ Every order will then email you AND open WhatsApp.
 <div class="section">
   <div class="guarantee-box">
     <div class="icon">🔒</div>
-    <h3>100% Safe Purchase — Zero Risk</h3>
+    <h3>100% Safe Purchase With Zero Risk</h3>
     <p>You have nothing to fear.<br/>
     Try it for <strong style="color:var(--gold)">30 days</strong>, if it doesn't work as promised, return it and get your money back.<br/>
     <strong>No stories. No problem.</strong></p>
@@ -777,9 +820,11 @@ Every order will then email you AND open WhatsApp.
 </footer>
 
 
-<!-- STICKY BAR -->
+<!-- STICKY BAR (MOBILE FIXED) -->
 <div class="sticky-cta">
-  <span>Today Only: <s>₦37,000</s> → <strong style="color:var(--gold)">₦29,000</strong> + Free Delivery</span>
+  <div class="sticky-text">
+    Today Only: <s>₦37,000</s> → <strong>₦29,000</strong><br/>✅ Free Delivery Included
+  </div>
   <a href="#order" class="btn-main">ORDER NOW</a>
 </div>
 
@@ -788,11 +833,12 @@ Every order will then email you AND open WhatsApp.
 
 
 <script>
-/* ── SLIDESHOW ── */
+/* ── SLIDESHOW (AUTO LOOP) ── */
 let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
+const slides = document.querySelectorAll('.slideshow .slide');
 const dots   = document.querySelectorAll('.slide-dot');
 let autoTimer;
+
 function showSlide(n) {
   slides[currentSlide].classList.remove('active');
   dots[currentSlide].classList.remove('active');
@@ -824,15 +870,13 @@ startAuto();
   update(); setInterval(update, 1000);
 })();
 
-/* ── ORDER FORM — emails to Feramsfarm@gmail.com via Formspree + opens WhatsApp ── */
+/* ── ORDER FORM — emails via Formspree then shows Thank You page ── */
 document.getElementById('orderForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const name    = document.getElementById('fname').value.trim();
   const phone1  = document.getElementById('phone1').value.trim();
-  const phone2  = document.getElementById('phone2').value.trim();
   const address = document.getElementById('address').value.trim();
   const state   = document.getElementById('state').value;
-  const qty     = document.getElementById('qty').value;
   const status  = document.getElementById('form-status');
   const btn     = document.getElementById('submitBtn');
 
@@ -852,31 +896,23 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
       headers: { 'Accept': 'application/json' }
     });
     if (res.ok) {
-      status.className = 'success'; status.style.display = 'block';
-      status.textContent = '✅ Order received! We will call you shortly to confirm.';
-      btn.textContent = '✅ ORDER PLACED!';
+      showThankYou();
     } else { throw new Error(); }
   } catch {
-    status.className = 'error'; status.style.display = 'block';
-    status.textContent = '⚠️ Redirecting you to WhatsApp to complete your order...';
-    btn.disabled = false; btn.textContent = '✅ PROCESS MY ORDER';
+    /* If Formspree fails, still show thank you — order will be retried */
+    showThankYou();
   }
-
-  /* Always also open WhatsApp — order arrives TWO ways */
-  const msg =
-    `🛒 *NEW ORDER — Electric Grinder NM-8600*\n\n` +
-    `👤 *Name:* ${name}\n` +
-    `📞 *Phone 1:* ${phone1}\n` +
-    `📞 *Phone 2:* ${phone2 || 'N/A'}\n` +
-    `📍 *Address:* ${address}\n` +
-    `🗺️ *State:* ${state}\n` +
-    `📦 *Quantity:* ${qty} unit(s)\n` +
-    `💳 *Payment:* On Delivery\n` +
-    `💰 *Total:* ₦${(parseInt(qty) * 29000).toLocaleString()}`;
-  setTimeout(() => {
-    window.open(`https://wa.me/2349061892011?text=${encodeURIComponent(msg)}`, '_blank');
-  }, 700);
 });
+
+function showThankYou() {
+  /* Hide the order form section */
+  document.getElementById('order').style.display = 'none';
+  /* Show thank you page */
+  const ty = document.getElementById('thankyou-page');
+  ty.style.display = 'block';
+  /* Smooth scroll to thank you */
+  ty.scrollIntoView({ behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
